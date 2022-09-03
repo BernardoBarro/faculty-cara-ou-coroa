@@ -1,27 +1,27 @@
-import 'dart:math';
-
-import 'package:cara_coroa/ResultadoJogo.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class ResultadoJogo extends StatefulWidget {
+  late int valor;
+  ResultadoJogo(this.valor);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<ResultadoJogo> createState() => _ResultadoJogoState();
 }
 
-class _HomeState extends State<Home> {
-  void _jogarMoeda() {
-    var numeroSorteado = Random().nextInt(2);
+class _ResultadoJogoState extends State<ResultadoJogo> {
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ResultadoJogo(numeroSorteado)),
-    );
+  var _caraCoroa = const AssetImage("");
+  void jogar(){
+    if(widget.valor == 1){
+      _caraCoroa = const AssetImage("images/moeda_cara.png");
+    }else{
+      _caraCoroa = const AssetImage("images/moeda_coroa.png");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    jogar();
     return Scaffold(
       backgroundColor: Color.fromRGBO(97, 189, 134, 1),
       body: Container(
@@ -31,13 +31,15 @@ class _HomeState extends State<Home> {
           children: [
             Padding(
               padding: EdgeInsets.all(16),
-              child: Image.asset("images/logoC.png"),
+              child: Image(
+                image: _caraCoroa,
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16),
               child: GestureDetector(
-                onTap: _jogarMoeda,
-                child: Image.asset("images/botao_jogar.png"),
+                onTap: () {Navigator.pop(context);},
+                child: Image.asset("images/botao_voltar.png"),
               ),
             ),
             Padding(
